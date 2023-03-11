@@ -7,9 +7,11 @@ specifiers:
   '@fontsource/space-grotesk': ^4.5.13
   '@formkit/auto-animate': 1.0.0-beta.6
   '@tanstack/react-query': ^4.26.1
+  '@types/nodemailer': ^6.4.7
   framer-motion: ^10.2.4
   mongoose: ^7.0.1
   next: 13.2.4
+  nodemailer: ^6.9.1
   react: 18.2.0
   react-dom: 18.2.0
   react-hook-form: ^7.43.5
@@ -21,9 +23,11 @@ dependencies:
   '@fontsource/space-grotesk': 4.5.13
   '@formkit/auto-animate': 1.0.0-beta.6
   '@tanstack/react-query': 4.26.1_biqbaboplfbrettd7655fr4n2y
+  '@types/nodemailer': 6.4.7
   framer-motion: 10.2.4_biqbaboplfbrettd7655fr4n2y
   mongoose: 7.0.1
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
+  nodemailer: 6.9.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.5_react@18.2.0
@@ -1442,6 +1446,12 @@ packages:
     resolution: {integrity: sha512-z6nr0TTEOBGkzLGmbypWOGnpSpSIBorEhC4L+4HeQ2iezKCi4f77kyslRwvHeNitymGQ+oFyIWGP96l/DPSV9w==}
     dev: false
 
+  /@types/nodemailer/6.4.7:
+    resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
+    dependencies:
+      '@types/node': 18.15.0
+    dev: false
+
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: false
@@ -1839,6 +1849,11 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
+
+  /nodemailer/6.9.1:
+    resolution: {integrity: sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /object-assign/4.1.1:

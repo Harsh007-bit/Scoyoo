@@ -1,11 +1,13 @@
 import connect from "@/db"
+import { sendBookingConfirmationEmail } from "@/mail";
 import { Booking } from "@/models/Booking"
 
 export default async function handler(req, res) {
     await connect();
     if (req.method === "POST") {
-        const data = req.body
-        const booking = await Booking.create(JSON.parse(data))
+        const data = JSON.parse(req.body)
+        const booking = await Booking.create(data)
+        sendBookingConfirmationEmail(data.user.email, data.room, data.checkIn, data.checkOut)
         res.status(200);
         res.json(booking);
         return;
