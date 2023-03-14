@@ -1,4 +1,4 @@
-import Card, { sleep } from "@/components/Card";
+import Card from "@/components/Card";
 import useAutoAnimate from "@/useAutoAnimate";
 import {
   Button,
@@ -13,15 +13,15 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home() {
   const [bookings, setBookings] = useState([]);
-  const [filters, setFilters] = useState({});
+  const [filter, setFilter] = useState({});
   const { isLoading, isFetching } = useQuery(
-    ["bookings", filters],
+    ["bookings", filter],
     async () => {
       const _res = await fetch(`/api/bookings`);
       const res = await _res.json();
@@ -33,6 +33,20 @@ export default function Home() {
       },
     }
   );
+
+  const filteredData =
+    Object.keys(filter).length === 0
+      ? bookings
+      : bookings.filter((b) => {
+          const actualFilter = Object.entries(filter).filter(
+            ([_, v]) => v !== "" && v !== false
+          );
+          for (const [k, v] of actualFilter) {
+            if (b[k] === v) return true;
+          }
+          return false;
+        });
+
   return (
     <Box p={8} h="full" w="full">
       <Heading size={"xl"} mb={8} display="flex" alignItems={"center"} gap={4}>
@@ -44,7 +58,7 @@ export default function Home() {
             </Text>
           ))}
       </Heading>
-      <Filter filters={[filters, setFilters]} />
+      <Filter filters={[filter, setFilter]} />
       <Grid
         templateColumns={"repeat(3,1fr)"}
         gap={8}
@@ -52,7 +66,7 @@ export default function Home() {
         w="full"
         ref={useAutoAnimate()}
       >
-        {bookings.map((data) => {
+        {filteredData.map((data) => {
           return <Card data={data} />;
         })}
       </Grid>
@@ -62,7 +76,12 @@ export default function Home() {
 
 const Filter = ({ filters: [filters, setFilters] }) => {
   const { isOpen, onToggle } = useDisclosure();
-  const { register, handleSubmit, reset } = useForm({ defaultValues: filters });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: filters });
   return (
     <Box w="full" zIndex={"sticky"} pos={"sticky"} top={8}>
       <HStack ref={useAutoAnimate()} justify={"end"} position="relative">
@@ -87,11 +106,7 @@ const Filter = ({ filters: [filters, setFilters] }) => {
             rounded="3xl"
             as="form"
             onSubmit={handleSubmit((data) => {
-              const filteredData = Object.fromEntries(
-                Object.entries(data).filter(([_, v]) => v !== "" && v !== false)
-              );
-              setFilters(filteredData);
-              console.log(data);
+              setFilters(data);
             })}
             p={8}
             right={0}

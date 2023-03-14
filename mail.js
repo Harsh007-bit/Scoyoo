@@ -26,4 +26,4 @@ export async function sendBookingConfirmationEmail(email, roomNumber, startTime,
   const info = await transporter.sendMail(mailOptions);
   console.log('Email sent: ', info.messageId);
 
-}
+} 
